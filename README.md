@@ -1,4 +1,12 @@
-# rogeriopradoj/cntlm-proxy-windows
+# rogeriopradoj/cntlm-proxy-windows - **Versão ExperTI**
+
+--
+
+*Versão ExperTI*: Esta versão disponível neste branch foi feita especialmente para facilitar uso no ambiente ExperTI.
+
+Caso esteja buscando a solução geral, [acesse o branch principal no GitHub](https://github.com/rogeriopradoj/cntlm-proxy-windows).
+
+--
 
 Rode, no Windows, um proxy HTTP de maneira fácil.
 
@@ -7,7 +15,6 @@ Rode, no Windows, um proxy HTTP de maneira fácil.
 Agora, em duas versões de proxy, (muito obrigado @la-costa por compartilhar sobre o px):
 
 - [cntlm](http://cntlm.sourceforge.net/) (necessário digitar seu password no momento da execução)
-- [px](https://github.com/genotrance/px) (não é necessário fazer nenhuma configuração, pega os dados da sua sessão do Windows automaticamente)
 
 ## .env
 
@@ -16,26 +23,30 @@ O .env é necessário em ambos os formatos, seja com cntlm ou px. Existem variá
 Confirme que você tem um arquivo `.env` na raiz do projeto. Se precisar
 de um arquivo de exemplo, use o `.env.example`
 
-## Como iniciar o proxy
 
-### Com o px (mais simples, recomendado)
+## 1. Como iniciar o proxy cntlm
 
-1. Execute o `px_start.bat` e siga as orientações em tela até aparecer a mensagem `Serving at :3128 proc MainProcess`;
+Execute o `cntlm_start.bat` e siga as orientações em tela, colocando usuário e senha.
 
-### Com o cntml (tem um passo a mais, digitar sua senha)
+## 2. Como usar, depois do proxy ligado
 
-1. Execute o `cntlm_start.bat` e siga as orientações em tela até colocar a senha;
+### 2.1. Como usar no navegador
 
-## Depois do proxy ligado (cntlm ou px), como utilizar no seu terminal
+Ir nas configurações de rede do navegador e configurar:
+
+- endereço: localhost
+- porta: 3128
+
+### 2.2. Como utilizar no seu terminal
 
 1. Abra outro terminal (cmd ou bash):
     1. **cmd**: arraste o arquivo `proxy_set_cmd.bat` e execute
     2. **bash**: escreva `source`, coloque um espaço, arraste o arquivo `proxy_set_bash.sh`, e execute
 2. Nesse mesmo terminal que está, execute os comandos que precisam do proxy
 
-## Como interromper
+## 3. Como interromper o proxy cntlm
 
 Quando terminar, feche:
 
-- esse terminal que está trabalhando
-- a outra tela, que está rodando o cntlm_start.bat ou o px_start.bat
+- o terminal e o navegador que estiver trabalhando
+- a outra tela, que está rodando o cntlm_start.bat

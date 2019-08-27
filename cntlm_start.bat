@@ -16,61 +16,21 @@ IF NOT EXIST %ENVFILE% (
 call:GetEnvValue "CNTLM_NO_PROXY" CNTLM_NO_PROXY
 call:GetEnvValue "CNTLM_LISTEN" CNTLM_LISTEN
 call:GetEnvValue "CNTLM_PROXY" CNTLM_PROXY
+call:GetEnvValue "CNTLM_DOMAIN" CNTLM_DOMAIN
+call:GetEnvValue "CNTLM_USER" CNTLM_USER
 
-if not "%1" == "-y" (
-    goto prompt_user
-)
-goto main
-
-:prompt_user
-cls
+echo.   - Digite seu usuario no formato ...
 echo.
-echo.==================================================================
-echo.==                           CONFIGS                            ==
-echo.==================================================================
+echo.		c123456
 echo.
-echo. Você pode passar o parâmetro -y para não ser questionado e
-echo. deixar os valores padrões serão utilizados.
-echo. 
-echo.     ^> proxy_start.bat -y
-echo. 
-echo. Observação.: A senha(Password) sempre é solicitada.
+echo.   ---
 echo.
-echo.==================================================================
+echo.   - CNTLM_USER: !CNTLM_USER!
 echo.
-pause
-
-cls
-echo.
-echo.==================================================================
-echo.==                           CONFIGS                            ==
-echo.==================================================================
-echo.
-
-echo.   - CNTLM_NO_PROXY: !CNTLM_NO_PROXY!
-echo.
-set /p CNTLM_TEMP_VAR_1="...Digite novo valor, ou <ENTER> para continuar..."
-if not "!CNTLM_TEMP_VAR_1!" == "" (
-    set CNTLM_NO_PROXY="!CNTLM_TEMP_VAR_1!"
-    echo.   **Alterado** CNTLM_NO_PROXY: !CNTLM_NO_PROXY!
-)
-echo.
-
-echo.   - CNTLM_LISTEN: !CNTLM_LISTEN!
-echo.
-set /p CNTLM_TEMP_VAR_2="...Digite novo valor, ou <ENTER> para continuar..."
-if not "!CNTLM_TEMP_VAR_2!" == "" (
-    set CNTLM_LISTEN="!CNTLM_TEMP_VAR_2!"
-    echo.   **Alterado** CNTLM_LISTEN: !CNTLM_LISTEN!
-)
-echo.
-
-echo.   - CNTLM_PROXY: !CNTLM_PROXY!
-echo.
-set /p CNTLM_TEMP_VAR_3="...Digite novo valor, ou <ENTER> para continuar..."
-if not "!CNTLM_TEMP_VAR_3!" == "" (
-    set CNTLM_PROXY="!CNTLM_TEMP_VAR_3!"
-    echo.   **Alterado** CNTLM_PROXY: !CNTLM_PROXY!
+set /p CNTLM_TEMP_VAR_5="...Digite novo valor, ou <ENTER> para continuar...      "
+if not "!CNTLM_TEMP_VAR_5!" == "" (
+    set CNTLM_USER="!CNTLM_TEMP_VAR_5!"
+    echo.   **Alterado** CNTLM_USER: !CNTLM_USER!
 )
 echo.
 
@@ -89,14 +49,14 @@ echo.   - CNTLM_LISTEN: !CNTLM_LISTEN!
 echo.
 echo.   - CNTLM_PROXY: !CNTLM_PROXY!
 echo.
-echo.   - USERDOMAIN: %USERDOMAIN%
+echo.   - CNTLM_DOMAIN: !CNTLM_DOMAIN!
 echo.
-echo.   - USERNAME:   %USERNAME%
+echo.   - CNTLM_USER: !CNTLM_USER!
 echo.
 echo.==================================================================
 echo.
 
-%~dp0cntlm.exe -v -d %userdomain% -u %username% -I -l !CNTLM_LISTEN! -N !CNTLM_NO_PROXY! !CNTLM_PROXY!
+%~dp0cntlm.exe -v -d !CNTLM_DOMAIN! -u !CNTLM_USER! -I -l !CNTLM_LISTEN! -N !CNTLM_NO_PROXY! !CNTLM_PROXY!
 
 endlocal
 chcp %cp%>nul
