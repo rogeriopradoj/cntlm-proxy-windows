@@ -10,19 +10,12 @@ Caso esteja buscando a solução geral, [acesse o branch principal no GitHub](ht
 
 Rode, no Windows, um proxy HTTP de maneira fácil.
 
-Útil para acessar por linha de comando ferramentas de gestão de dependências (ex. composer, npm, nuget) com URLs que são acessíveis via navegador mas não funcionam via terminal (wget, curl).
-
-Agora, em duas versões de proxy, (muito obrigado @la-costa por compartilhar sobre o px):
-
-- [cntlm](http://cntlm.sourceforge.net/) (necessário digitar seu password no momento da execução)
+- [cntlm](http://cntlm.sourceforge.net/) (necessário digitar seu usuário e password no momento da execução)
 
 ## .env
 
-O .env é necessário em ambos os formatos, seja com cntlm ou px. Existem variáveis específicas lá dentro, CNTLM_* e PX_*.
-
 Confirme que você tem um arquivo `.env` na raiz do projeto. Se precisar
 de um arquivo de exemplo, use o `.env.example`
-
 
 ## 1. Como iniciar o proxy cntlm
 
