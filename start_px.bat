@@ -95,7 +95,7 @@ echo.
 echo.==================================================================
 echo.
 
-%~dp0vendor\px-v0.0.0-2019-05-20\px.exe --proxy=!PX_PROXY! --listen=!PX_PORT! --noproxy=!PX_NO_PROXY! --gateway --foreground --verbose --debug --uniqlog
+%~dp0vendor\px-v0.7.0\px.exe --proxy=!PX_PROXY! --listen=!PX_PORT! --noproxy=!PX_NO_PROXY! --gateway --foreground --verbose --debug --uniqlog
 
 endlocal
 chcp %cp%>nul

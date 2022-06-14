@@ -1,0 +1,178 @@
+v0.7.0 - TBD
+- Switched to using libcurl for all outbound HTTP connections and proxy auth
+- Removed dependency on ntlm-auth, pywin32 and winkerberos
+- Added --password to prompt and save password to default keyring for non single
+  sign-on use cases
+- Px is no longer involved in and hence unable to cache the proxy authentication
+  mechanism used by libcurl for subsequent connections
+- Added --verbose to log to stdout but not write to files
+- Logging output now includes more details of the call tree
+- Fixed issue where debug output from child processes on Linux were duplicated
+  to the main process log
+- Package structure has changed significantly to meet Python / pip requirements
+- Updated release process to post Windows binary wheels containing libcurl and
+  the full README in markdown format as the description on Pypi.org
+- Vendoring https://github.com/karpierz/libcurl with minor changes until upstream
+  officially supports Linux
+
+v0.6.3 - 2022-04-25
+- Fixed #139, #141 - bug in noproxy parsing
+
+v0.6.2 - 2022-04-06
+- Fixed #137 - quit() and save() don't work on Windows
+
+v0.6.1 - 2022-04-05
+- Enabled multiprocessing on Linux
+
+v0.6.0 - 2022-04-02
+- Moved all Windows proxy detection code into wproxy.py, eventually to be made
+  an independent module
+- Moved debugging code into separate debug.py module
+- Removed support for file:// PAC files configured in network settings since
+  Windows 10 no longer supports this scheme (see https://bit.ly/3JKPgjR)
+- Added support in wproxy to detect proxies defined via environment variables
+- Added support for Linux - only NTLM and BASIC authentication are supported
+  for now, PAC files are not supported and Px is limited to a single process
+
+v0.5.1 - 2022-03-22
+- Fixed #128 - IP:port split once from the right
+- Binary is now built using Nuitka
+- Moved PyInstaller build script to tools.py
+- Removed px.ico from PyInstaller build since it upsets anti-virus tools
+
+v0.5.0 - 2022-01-26
+- Added support for issue #58 - authentication with user/password when SSPI is
+  unavailable or not preferred.
+- Pulled PR #68 to handle case where no longer behind PAC proxy
+- Fixed minor bug in file:// PAC file handling
+- Implemented #65 - support for specifying PAC in INI
+- Implemented #73 - force auth mechanism in INI
+- Merged PR #85 - sanitize authorization header, shutdown socket, defer
+  connection header during auth (#71), drop completely for CONNECT, forward
+  error body, 2.7 fix
+- Switched to Python 3.7, drop 3.4 support
+- Merged PR #80 - fallback to DIRECT if no proxy found via auto or PAC discovery
+- Added basic auth support (PR #82)
+- Fixed issue where an empty domain was breaking password access
+- Fixed #88, issue 2 in #71, PR #83 - use auth mechanism in order
+- Added code to keep-alive during authentication - issue 3 in #71
+- Fixed #108 - case sensitive authentication response
+- Fixed #116 - Python 3.0 deprecation compatibility
+- Fixed #122 - pywin32 import order
+- Resolved #72 via documentation update
+- Minor changes to improve client and proxy disconnects
+
+v0.4.0 - 2018-09-04
+- Implemented #18 - support for multiple NTLM proxies that will be iterated
+  through if connection fails
+- Included fix for allowing parent proxy to resolve hostname if not resolvable
+  locally - #18
+- Added --socktimeout to configure maximum time to wait before giving up on
+  socket connections
+- Fixed #27 - Px does not exit with --quit
+- Fixed #26 - Px doesn't attach to powershell console
+- Allow Px to work with pythonw.exe - console output and stdout crash
+- Fix Python 2.x crashes in quit()
+- Fixed issue #22 - support for Kerberos authentication
+- Removed pywin32 option since it doesn't work for Kerberos auth
+- Fixed issues with useragent header override functionality
+- Allow Px to run in the foreground when frozen or run with pythonw.exe - #25
+- Make --proxy an optional setting if --noproxy is defined, reject connections
+  if remote server isn't in noproxy list and no proxy defined
+- Add --hostonly which only allows IP addresses assigned to local interfaces to
+  use Px. Disallow any external clients unless --gateway specified along with a
+  restrictive --allow definition - PR20
+- Changed --socktimeout from int to float
+- Added support to discover proxy info from Internet Options - Automatic Config
+  URL with PAC files, WPAD, or static proxy definition - #30
+- Added --proxyreload flag to configure interval between rediscovery of proxy
+  info
+- Merged PR32 to fix PAC proxy port detection
+- Implemented fix for #29 - discover proxy type instead of assuming Negotiate
+  will work across the board
+- Close proxy socket if it returns "Proxy-Connection: close" header
+- Improved memory and disk usage which had increased drastically after adding
+  PAC support - #30
+- Added setup.py to install Px using pip - #24
+- Fixed bug where Px crashes on Windows startup - #31
+- Fixed issue of no debug output - #36
+- Ensure logs are generated where Px is instead of working directory and flushed
+  immediately, quit should log in separate file and not overwrite MainProcess
+- Added --uniqlog to allow multiple instances of Px to run with separate log
+  destinations or to prevent overwriting logs on subsequent runs
+- Sanitize auth exchanges in generated logs for easy sharing in issues
+- Handle NTLM auth failure instead of crashing - #34
+- Add FTP port 21 for ftp:// requests - #39
+- Catch exception for issue #38
+- Fix issue #44 - move from README.txt to README.md
+- Fix issue #43 - fix PAC support using WINHTTP
+- Added documentation for #46
+- Include PR #48 to enable support for failover proxies received from PAC
+- Fix issue #51 - support for Windows 8 and below
+- Fix issue #34 by using pywin32 for NTLM and winkerberos for Kerberos since the
+  latter doesn't work consistently for NTLM
+- Pulled threading improvements from PR #56
+- Improve message for issue #5
+- Fix issue #57 - handle pip shim scenario during --install
+- Fix issue #47 and #52 by forwarding data as received
+- Fix issue #60 - chunked encoding transfer broken
+- Increasing default socktimeout to 20 seconds
+
+v0.3.0 - 2018-02-19
+- Fixed issue 9 - Added support for winkerberos to workaround pywin32 bug
+- Cleaned up loading module dependencies across Python versions
+- Fixed issue where thread name in logs was wrong due to Python 3.6+ issue
+- Fixed issue where URL without trailing / was sending blank path to remote
+- Fixed issue where Px was disconnecting instead of keeping connections alive
+- Changed Pyinstaller to build a single executable file
+- Fixed bug where chunked transfer headers were being returned incorrectly
+- Removed sleep from non-CONNECT methods that was slowing down Px considerably
+- Added "allow" feature to allow (deny) client ip addresses (helpful with
+  Docker for Windows)
+- Added "--gateway" parameter
+- Fixed issue where a HTTP 304 Not Modified response would hang
+- Enabled --debug also for --quit code path
+- Fixed issue where --quit would not be able to stop px instances with
+  different uppercase/lowercase process names
+- Fixed exception when logging bad requests containing unicode
+- Fixed issue 12 - proxy keep-alive support for HTTP/1.0 clients
+- Fixed issue 13 - support for HTTP Expect-Continue
+- Fixed issue where non-resolving hostnames were not failing and going through
+  proxy instead
+- Fixed winkerberos crash if no domain controller
+- Fixed issue 17 - ability to run Px at user login
+- Added support for px.exe to write to console when appropriate
+- Consolidated all globals into class members, removed redundancies
+- Added CLI flags for all config options
+- Added --config flag to load alternate config file
+- Added ability to override or send User-Agent header on client's behalf
+- Added help menu accessible with --help
+- Addressed issue #23 - removed UPX compression of Px.exe since benefits are
+  marginal and can potentially reduce odds of being flagged susicious
+- Added ability to --save configuration from CLI, allowing full setup of Px
+  without having to separately edit INI file
+- Added version info into Px to show up in help
+
+v0.2.1 - 2017-03-30
+- Implemented issue 7 - "listen" setting to configure IP address to bind
+  service to
+- Fixed issue 3 - Function requested not supported in SSPI
+- Fixed issue 5 - Improved error message when port is already in use
+- Fixed issue 6 - Added support for PUT, PATCH and DELETE
+- Fixed issue where http POST was blocking forever, attempting to read POST
+  data twice from socket
+
+v0.2.0 - 2017-02-05
+- Added "noproxy" feature to bypass NTLM proxy
+- Added "threads" setting to configure number of threads per process
+- Added "test.py" to validate basic Px functionality
+- Fixed bug where host disconnects would throw httpserver into an infinite loop
+- Fixed bug where HEAD requests were waiting for a response body
+- Fixed bug where Px was waiting if remote server disconnected before response
+  code
+- Fixed bug where content length = 0 was waiting for a response body
+- Fixed bug where chunked response was being returned without content length
+- Fixed Px to exit completely with CTRL-C
+
+v0.1.0 - 2016-08-18
+- Initial release
