@@ -14,7 +14,7 @@ IF NOT EXIST %ENVFILE% (
 )
 
 call:GetEnvValue "PX_NO_PROXY" PX_NO_PROXY
-call:GetEnvValue "PX_PORT" PX_PORT
+call:GetEnvValue "PX_LISTEN" PX_LISTEN
 call:GetEnvValue "PX_PROXY" PX_PROXY
 
 if not "%1" == "-y" (
@@ -55,12 +55,12 @@ if not "!PX_TEMP_VAR_1!" == "" (
 )
 echo.
 
-echo.   - PX_PORT: !PX_PORT!
+echo.   - PX_LISTEN: !PX_LISTEN!
 echo.
 set /p PX_TEMP_VAR_2="...Digite novo valor, ou <ENTER> para continuar..."
 if not "!PX_TEMP_VAR_2!" == "" (
-    set PX_PORT="!PX_TEMP_VAR_2!"
-    echo.   **Alterado** PX_PORT: !PX_PORT!
+    set PX_LISTEN="!PX_TEMP_VAR_2!"
+    echo.   **Alterado** PX_LISTEN: !PX_LISTEN!
 )
 echo.
 
@@ -84,7 +84,7 @@ echo.==================================================================
 echo.
 echo.   - PX_NO_PROXY: !PX_NO_PROXY!
 echo.
-echo.   - PX_PORT: !PX_PORT!
+echo.   - PX_LISTEN: !PX_LISTEN!
 echo.
 echo.   - PX_PROXY: !PX_PROXY!
 echo.
@@ -95,7 +95,7 @@ echo.
 echo.==================================================================
 echo.
 
-%~dp0vendor\px-v0.7.0\px.exe --proxy=!PX_PROXY! --listen=!PX_PORT! --noproxy=!PX_NO_PROXY! --gateway --foreground --verbose --debug --uniqlog
+%~dp0vendor\px-v0.7.0\px.exe --proxy=!PX_PROXY! --listen=!PX_LISTEN! --noproxy=!PX_NO_PROXY! --gateway --foreground --verbose --debug --uniqlog
 
 endlocal
 chcp %cp%>nul
