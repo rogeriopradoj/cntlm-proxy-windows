@@ -1,5 +1,7 @@
 # rogeriopradoj/cntlm-proxy-windows
 
+[![Open Source Helpers](https://www.codetriage.com/rogeriopradoj/cntlm-proxy-windows/badges/users.svg)](https://www.codetriage.com/rogeriopradoj/cntlm-proxy-windows)
+
 Rode, no Windows, um proxy HTTP de maneira fácil.
 
 Útil para acessar por linha de comando ferramentas de gestão de dependências (ex. composer, npm, nuget, pip, conda, mamba) com URLs que são acessíveis via navegador mas não funcionam via terminal (wget, curl).
